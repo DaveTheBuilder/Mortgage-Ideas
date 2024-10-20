@@ -9,7 +9,7 @@ loans = [
     {'principal': 84816, 'interest_rate': 4.04 / 100, 'years_left': 10 + 5/12},  # 10 years 5 months remaining
     {'principal': 51584, 'interest_rate': 4.04 / 100, 'years_left': 7 + 9/12}   # 7 years 9 months remaining
 ]
-
+ 
 # Combined mortgage principal for reference
 total_mortgage_principal = sum(loan['principal'] for loan in loans)
 current_monthly_payment = 2252  # Current fixed total monthly mortgage payment in £
