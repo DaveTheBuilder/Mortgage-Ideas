@@ -27,10 +27,22 @@ for sector, etf in etfs.items():
     data = yf.download(etf, start=start_date, end=end_date)
     price_data[sector] = data['Adj Close']
 
-# Calculate the cumulative returns for each ETF
-cumulative_returns = (price_data / price_data.iloc[0]) - 1
+# Calculate monthly returns based on investments on the 26th of each month
+# First, ensure we have monthly data
+monthly_data = price_data.resample('M').last()  # Get last trading day of each month
+
+# Create a new DataFrame to store monthly returns
+monthly_returns = monthly_data.pct_change().dropna()  # Calculate monthly returns
+
+# Extract the monthly return for each ETF as a new DataFrame
+monthly_returns_table = monthly_returns.copy()
+
+# Display the monthly returns table
+print("Monthly Returns for S&P 500 Sector ETFs:")
+print(monthly_returns_table)
 
 # Plotting the cumulative returns
+cumulative_returns = (monthly_data / monthly_data.iloc[0]) - 1
 plt.figure(figsize=(14, 8))
 for sector in cumulative_returns.columns:
     plt.plot(cumulative_returns.index, cumulative_returns[sector], label=sector)
